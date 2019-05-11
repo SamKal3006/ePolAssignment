@@ -1,0 +1,17 @@
+.div-policy {
+    max-width: 750px;
+    padding: 30px 38px 66px;
+    margin: 0 auto;
+    background-color: #eee;
+    border: 3px dotted rgba(0,0,0,0.1);
+}
+
+.div-policy-heading {
+    text-align:center;
+    margin-bottom: 30px;
+}
+
+table, tr, th, td {
+  border: 1px solid green;
+  padding: 5px;
+}

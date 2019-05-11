@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+	<title>User Policies Application Status</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/policy.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+    <div th:replace="fragments/header :: header"/>
+    	
+	<div class="container">
+	  <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+		<div class="div-policy">
+			<h3 class="div-policy-heading" th:text="Application"></h3>
+			<br/>
+			<div th:if="${#lists.isEmpty(userPolicies)}">
+              <h2 class="div-policy-heading">No Application has been filed yet!!</h2>  
+            </div>
+			<div th:if="${not #lists.isEmpty(userPolicies)}">
+			 <table>
+			 <tr>
+			  <th>Application Id</th>
+			  <th>Customer Name</th>
+			  <th>Policy Name</th>
+			  <th>Payment Plan</th>
+			  <th>Premium Amount</th>
+			  <th>Policy Cover</th>
+			  <th>Application Status</th>
+			  <th>Update Premium Amount</th>
+			 </tr>
+			 <tr th:each="userPolicy: ${userPolicies}">
+               <td th:text="${userPolicy.id}" />
+               <td th:text="${userPolicy.user.name}" />
+               <td th:text="${userPolicy.policy.name}" />
+               <td th:text="${userPolicy.premiumPaymentPlan}" />
+               <td th:text="${'$ ' + userPolicy.premiumAmount}" />
+               <td th:text="${'$ ' + userPolicy.policy.cover}" />
+               <td th:text="${userPolicy.applicationStatus}" />
+               <td sec:authorize="hasAuthority('AGENT')" ><a href="updatePremiumAmount.html" 
+                      th:href="@{/agent/updatePremiumAmount(appId=${userPolicy.id})}">Update</a>
+               </td>
+             </tr>
+            </table>
+			</div>
+		</div>
+	 </div>
+	 
+	 <div th:replace="fragments/footer :: footer"/>
+	 
+</body>
+</html>

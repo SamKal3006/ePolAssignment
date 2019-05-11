@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Update Customer Policy Premium Amount</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<script src ="/js/policy.js"></script>
+  	<div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+	
+	<div th:replace="fragments/header :: header"/>
+	<!-- <form th:action="@{/}" method="get">
+		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
+	</form>	 -->
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+			    <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+				<form autocomplete="off" action="#" th:action="@{/agent/updatePremiumAmount(appId=${userPolicy.id})}"
+					th:object="${userPolicy}" method="post" class="form-register"
+					role="form">
+					<h3 class="form-register-heading">Update Customer Policy Premium Amount</h3>
+					<br/>
+					
+					<div>
+						<label th:if="${#fields.hasErrors('user')}" th:errors="*{user}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{user.name}" placeholder="Name"
+								class="form-control" disabled="disabled"/> 
+					</div>					
+					<br/>
+
+					
+					<div>
+						<label	th:if="${#fields.hasErrors('policy')}" th:errors="*{policy}"
+								class="validation-message"></label>
+						<!-- <label>Choose Policy</label> -->		
+						
+                            <div th:each="pol : ${allPolicies}">
+                                <input type="radio" th:field="*{policy}" th:value="${pol.id}" disabled="disabled"/>
+                                <input type="hidden" th:for="${#ids.prev('policy')}" th:id="${#ids.prev('policy') + 'hidden'}" th:value="${pol.premium}"/>
+                                <label th:for="${#ids.prev('policy')}"  th:text="${pol.name}"></label>
+                            </div>
+           
+					</div>					
+					<br/>
+					
+					<div>
+						<label th:if="${#fields.hasErrors('premiumPaymentPlan')}" th:errors="*{premiumPaymentPlan}"
+								class="validation-message"></label>
+						<select th:field="*{premiumPaymentPlan}" class="form-control" disabled="disabled">
+                            <option th:each="type : ${allPaymentPlans}" 
+                                    th:value="${type}" 
+                                    th:text="${type}"/>
+                        </select>
+                        <!-- <input type="text" th:field="*{premiumPaymentPlan}" placeholder="Premium Payment Plan" 
+						       class="form-control" /> -->
+					</div>
+					<br/>
+					
+					<div>
+						<label th:if="${#fields.hasErrors('commissionAmount')}" th:errors="*{commissionAmount}"
+								class="validation-message"></label>
+						<input type="number" th:field="*{commissionAmount}" placeholder="Agent Commission Amount" 
+						       class="form-control"/>
+					</div>
+					<br/>
+					
+					<div>
+						<label th:if="${#fields.hasErrors('premiumAmount')}" th:errors="*{premiumAmount}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{premiumAmount}" placeholder="Premium Amount" 
+						       class="form-control" readOnly="readonly"/>
+					</div>
+					<br/>
+					
+					<!-- <div>
+						<label th:if="${#fields.hasErrors('premiumPayDate')}" th:errors="*{premiumPayDate}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{premiumPayDate}" placeholder="Premium Pay Date" 
+						       class="form-control" /> 
+					</div>
+					<br/>
+					
+					<div>
+						<label th:if="${#fields.hasErrors('premiumStartDate')}" th:errors="*{premiumStartDate}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{premiumStartDate}" placeholder="Premium Start Date" 
+						       class="form-control" /> 
+					</div>
+					<br/>
+					
+					<div>
+						<label th:if="${#fields.hasErrors('premiumNextDate')}" th:errors="*{premiumNextDate}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{premiumNextDate}" placeholder="Premium Next Due Date" 
+						       class="form-control" /> 
+					</div>
+					<br/> -->
+
+					<div>
+							<button type="submit" class="btn btn-primary btn-block">Update</button>
+					</div>
+					<br/>
+					
+					<span th:utext="${successMessage}"></span>
+					
+			</form>
+			</div>
+		</div>
+	</div>
+	
+	<div th:replace="fragments/footer :: footer"/>
+
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Available Policies</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/policy.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	<div th:replace="fragments/header :: header-css"/>
+</head>
+<body>
+
+    <div th:replace="fragments/header :: header"/>
+    	
+	<div class="container">
+	  <img th:src="@{/images/login.jpg}" class="img-responsive center-block" width="300" height="300" alt="Logo" />
+		<div class="div-policy">
+			<h3 class="div-policy-heading" th:text="Policies"></h3>
+			<br/>
+			<div th:if="${#lists.isEmpty(policies)}">
+              <h2 class="div-policy-heading">No Policies exist!!</h2>  
+            </div>
+			<div th:if="${not #lists.isEmpty(policies)}">
+			 <table>
+			 <tr>
+			  <th>Policy Id</th>
+			  <th>Policy Name</th>
+			  <th>Policy Type</th>
+			  <th>Policy Term</th>
+			  <th>Policy Cover</th>
+			  <th>Policy Basic Premium(p.a)</th>
+			 </tr>
+			 <tr th:each="policy: ${policies}">
+               <td th:text="${policy.id}" />
+               <td th:text="${policy.name}" />
+               <td th:text="${policy.type}" />
+               <td th:text="${policy.term}" />
+               <td th:text="${'$ ' + policy.cover}" />
+               <td th:text="${'$ ' + policy.premium}" />
+            </tr>
+            </table>
+			</div>
+		</div>
+	 </div>
+	 
+	 <div th:replace="fragments/footer :: footer"/>
+	 
+</body>
+</html>
